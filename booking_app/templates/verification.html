@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Verification</title>
+</head>
+<body>
+ <h5 class="card-title">Are you sure you want to delete </h5>
+   <form method="POST">
+       {% csrf_token %}
+       <button type="submit" class="btn btn-danger">Delete room</button>
+   </form>
+
+   <a href="{% url 'all_rooms' %}">Return</a>
+</body>
+</html>

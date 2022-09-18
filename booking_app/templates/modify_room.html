@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add room</title>
+    <title>Modify room</title>
 </head>
 <body>
-
 <form action="" method="POST">
     {% csrf_token %}
+
     <label>Name room
-        <input type="text" name="name">
+        <input type="text" name="name" value="{{ room.name }}">
     </label>
     <br>
     <label>Capacity room

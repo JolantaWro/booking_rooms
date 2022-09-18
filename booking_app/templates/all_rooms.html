@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Show all rooms</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/fc894043df.js" crossorigin="anonymous"></script>
 </head>
 <body>
+{% if rooms|length == 0 %}
+    <h2>No rooms available</h2>
+{% else %}
+    {% for room in rooms %}
+        <p> {{ room.name }}<a href="{% url 'details_rooms' room.id %}">Details</a></p>
+        <p> {{ room.name }}<a href="{% url 'delete_room' room.id %}">Del</a></p>
+        <p>{{ room.size_room }}</p>
+<!--        <p>{{ room.size_room }}</p>-->
+        <p>{{ room.availability_projector }}</p>
+        <a href="{% url 'modify_room' room.id %}">Edit</a>
+        <a href="{% url 'delete_room' room.id %}">Delete</a>
+            <a href="{% url 'reserve_room' room.id %}">Reserve</a>
+    {% endfor %}
+{% endif %}
 
 </body>
 </html>

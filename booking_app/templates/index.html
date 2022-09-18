@@ -5,8 +5,9 @@
     <title>Reservation</title>
 </head>
 <body>
-<!--<a href="{% url 'show_rooms' %}">Rooms </a>-->
-<!--<a href="{% url 'add_room' %}">New room</a>-->
+{% csrf_token %}
+<a href="{% url 'all_rooms' %}">Rooms</a>
+<a href="{% url 'add_room' %}">New room</a>
 
 
 <footer class="footer">
