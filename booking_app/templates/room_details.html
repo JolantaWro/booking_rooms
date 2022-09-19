@@ -5,10 +5,16 @@
     <title>Details room</title>
 </head>
 <body>
-{% for room in rooms %}
-  {{ room.name }}
-  {{ room.size_room }}
-  {{ room.availability_projector }}
+  <p>Room name: {{ room.name }}</p>
+  <p>Room size: {{ room.size_room }} m<sup>2</sup></p>
+  <p>Availability projector: {{ room.availability_projector }}</p>
+  <a href="{% url 'modify_room' room.id %}">Edit</a>
+  <a href="{% url 'delete_room' room.id %}">Delete</a>
+<a href="{% url 'reserve_room' room.id %}">Reserve</a>
+<br>
+{% for reserve in reservations %}
+    <p>Reservation: {{ reserve.date_reservation }}</p>
+    <p>Description: {{ reserve.description }}</p>
 {% endfor %}
 </body>
 </html>

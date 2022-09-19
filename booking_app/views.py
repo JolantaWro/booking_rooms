@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from booking_app.models import Room
+from booking_app.models import Room, Reservation
+import datetime
 
 
 class AddRoomView(View):
@@ -36,8 +37,10 @@ class ShowAllRooms(View):
 
 class ShowDetails(View):
     def get(self, request, id):
-        rooms = Room.objects.get(pk=id)
-        return render(request, template_name='room_details.html', context={'rooms': [rooms]})
+        room = Room.objects.get(pk=id)
+        reservations = room.reservation_set.filter(date_reservation__gte=str(datetime.date.today()))
+        reservations.order_by('date_reservation')
+        return render(request, template_name='room_details.html', context={'room': room, 'reservations': reservations})
 
 class ModifyRoom(View):
     def get(self, request, id):
@@ -73,7 +76,26 @@ class DeleteRoom(View):
         return redirect("all_rooms")
 
 class ReserveRoom(View):
-    pass
+    def get(self, request, id):
+        room = Room.objects.get(pk=id)
+        return render(request, template_name='add_reserve.html', context={'room': room})
+
+    def post(self, request, id):
+        room_id = Room.objects.get(pk=id)
+        description = request.POST.get("description")
+        date_reserve = request.POST.get("date_reserve")
+        if Reservation.objects.filter(room_id=room_id, date_reservation=date_reserve):
+            message = f"<h2> The room is unavailable"
+            return HttpResponse(message)
+        if date_reserve < str(datetime.date.today()):
+            message = f"<h2> Booking date error"
+            return HttpResponse(message)
+
+        reserve_room = Reservation.objects.create(room_id=room_id, date_reservation=date_reserve, description=description)
+        reserve_room.save()
+        return redirect("all_rooms")
+
+
 
 
 

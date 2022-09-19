@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add reservation</title>
+</head>
+<body>
+    {% if room %}
+        <h4>Name room: {{ room.name }} </h4>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <label>Description
+            <input type="text" name="description">
+        </label>
+        <br>
+        <label>Date
+            <input type="date" name="date_reserve">
+        </label>
+        <br>
+        <label>
+            <input type="submit" value="Add">
+        </label>
+    </form>
+    {% endif %}
+</body>
+</html>

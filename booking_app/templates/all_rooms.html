@@ -11,14 +11,17 @@
     <h2>No rooms available</h2>
 {% else %}
     {% for room in rooms %}
-        <p> {{ room.name }}<a href="{% url 'details_rooms' room.id %}">Details</a></p>
-        <p> {{ room.name }}<a href="{% url 'delete_room' room.id %}">Del</a></p>
-        <p>{{ room.size_room }}</p>
+        <p>Room name: {{ room.name }}<a href="{% url 'details_rooms' room.id %}">Details</a></p>
+        <p>Room size: {{ room.size_room }} m<sup>2</sup></p>
 <!--        <p>{{ room.size_room }}</p>-->
-        <p>{{ room.availability_projector }}</p>
+        <p>Availability projector:  {{ room.availability_projector }}</p>
         <a href="{% url 'modify_room' room.id %}">Edit</a>
         <a href="{% url 'delete_room' room.id %}">Delete</a>
-            <a href="{% url 'reserve_room' room.id %}">Reserve</a>
+        <a href="{% url 'reserve_room' room.id %}">Reserve</a>
+        <br>
+        <br>
+        <br>
+        <br>
     {% endfor %}
 {% endif %}
 
