@@ -32,6 +32,12 @@ class AddRoomView(View):
 class ShowAllRooms(View):
     def get(self, request):
         rooms_all = Room.objects.all()
+        date_view = datetime.date.today()
+        for room in rooms_all:
+            reserve_date = [r.date_reservation for r in room.reservation_set.all()]
+            room.booking = False
+            if date_view in reserve_date:
+                room.booking = True
         return render(request, template_name='all_rooms.html', context={'rooms': rooms_all})
 
 
@@ -78,6 +84,7 @@ class DeleteRoom(View):
 class ReserveRoom(View):
     def get(self, request, id):
         room = Room.objects.get(pk=id)
+
         return render(request, template_name='add_reserve.html', context={'room': room})
 
     def post(self, request, id):
