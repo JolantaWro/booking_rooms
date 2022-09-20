@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+    <form action="/search" method="GET">
+        {% csrf_token %}
+
+        <label>Name room
+            <input type="text" name="name">
+        </label>
+        <label>The minimum size of the room
+            <input type="number" step="1" name="size">
+        </label>
+        <label>
+            <input type="checkbox" name="projector"> Projector availability
+        </label>
+        <label>
+            <input type="submit" value="Search">
+        </label>
+    </form>
+
+</body>
+</html>

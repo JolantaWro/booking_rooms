@@ -8,6 +8,47 @@
 {% csrf_token %}
 <a href="{% url 'all_rooms' %}">Rooms</a>
 <a href="{% url 'add_room' %}">New room</a>
+  <br>
+<br>
+  {% for room in rooms %}
+    <p>{{ room.name }}</p>
+    <br>
+    <p>{{ room.size_room }}</p>
+<br>
+    <br>
+        {% if room.reserved %}
+            Zarezerwowana
+        {% else %}
+            Dostępna
+        {% endif %}
+        {% if room.availability_projector %}
+            &#9745;
+        {% else %}
+            &#9746;
+        {% endif %}
+        {% empty %}
+            Brak dostępnych sal
+    {% endfor %}
+
+
+    <form action="/search" method="GET">
+        {% csrf_token %}
+
+        <label>Name room
+            <input type="text" name="name">
+        </label>
+        <label>The minimum size of the room
+            <input type="number" step="1" name="size">
+        </label>
+        <label>
+            <input type="checkbox" name="projector"> Projector availability
+        </label>
+        <label>
+            <input type="submit" value="Search">
+        </label>
+    </form>
+
+
 
 
 <footer class="footer">
@@ -16,4 +57,4 @@
       </div>
     </footer>
 </body>
-</html>html>
+</html>

@@ -85,7 +85,9 @@ class ReserveRoom(View):
     def get(self, request, id):
         room = Room.objects.get(pk=id)
 
-        return render(request, template_name='add_reserve.html', context={'room': room})
+        reservations = room.reservation_set.filter(date_reservation__gte=str(datetime.date.today()))
+        reservations.order_by('date_reservation')
+        return render(request, template_name='add_reserve.html', context={'room': room, 'reservations': reservations})
 
     def post(self, request, id):
         room_id = Room.objects.get(pk=id)
@@ -103,7 +105,24 @@ class ReserveRoom(View):
         return redirect("all_rooms")
 
 
+class SearchRoom(View):
+    def get(self, request):
+        name = request.GET.get("name")
+        size = request.GET.get("size")
+        size = int(size) if size else 0
+        projector = request.GET.get("projector") == "on"
 
+        rooms = Room.objects.all()
+        if projector:
+            rooms = rooms.filter(availability_projector=projector)
+        if size:
+            rooms = rooms.filter(size_room__gte=size)
+        if name:
+            rooms.filter(name__contains=name)
 
+        for room in rooms:
+            reserve_date = [r.date_reservation for r in room.reservation_set.all()]
+            room.reserved = str(datetime.date.today()) in reserve_date
 
+        return render(request, "index.html", context={"rooms": rooms, "date": datetime.date.today()})
 

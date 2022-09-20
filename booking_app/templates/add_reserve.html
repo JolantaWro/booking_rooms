@@ -21,9 +21,12 @@
             <input type="submit" value="Add">
         </label>
     </form>
-
-
-
+    {% endif %}
+    {% if reservations %}
+        {% for reserve in reservations %}
+            <p>Reservation: {{ reserve.date_reservation }}</p>
+            <p>Description: {{ reserve.description }}</p>
+        {% endfor %}
     {% endif %}
 </body>
 </html>

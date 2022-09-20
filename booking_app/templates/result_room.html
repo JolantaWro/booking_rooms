@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result search</title>
+</head>
+<body>
+{% if rooms|length == 0 %}
+    <h2>No rooms available</h2>
+{% else %}
+    {% for room in rooms %}
+        <p>Room name: {{ room.name }}<a href="{% url 'details_rooms' room.id %}">Details</a></p>
+        <p>Room size: {{ room.size_room }} m<sup>2</sup></p>
+        <p>Room booking: {{ room.booking }}</p>
+        <p>Availability projector:  {{ room.availability_projector }}</p>
+        <a href="{% url 'modify_room' room.id %}">Edit</a>
+        <a href="{% url 'delete_room' room.id %}">Delete</a>
+        <a href="{% url 'reserve_room' room.id %}">Reserve</a>
+        <br>
+        <br>
+        <br>
+        <br>
+    {% endfor %}
+{% endif %}
+
+</body>
+</html>
